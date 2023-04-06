@@ -40,7 +40,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: mrshiska/infra_yamdb:latest
+          context: ./api_yamdb/
+          tags: ${{ secrets.DOCKER_USERNAME }}/infra_yamdb:latest
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
