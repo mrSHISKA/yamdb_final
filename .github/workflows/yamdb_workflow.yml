@@ -53,7 +53,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
-          script:
+          script: |
             sudo docker-compose stop
             sudo docker-compose rm web
             touch .env
