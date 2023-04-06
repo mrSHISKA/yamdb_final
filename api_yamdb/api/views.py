@@ -4,21 +4,21 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, permissions, serializers, status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.pagination import LimitOffsetPagination
-
 from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import User
+
 from .filters import TitleFilter
-from .permissions import (IsAdmin, IsAdminOrReadOnly,
-                          IsAdminModeratorAuthorOrReadOnly)
-from .serializers import (CategorySerializer, CommentSerializer,
-                          GenreSerializer, ReviewSerializer,
-                          TitleSerializer, TitleSerializerCrUpDel,
-                          UserEditSerializer, UserEmailRegistration,
-                          UserConfirmation, UserSerializer)
 from .mixins import CreateListDestroy
+from .permissions import (IsAdmin, IsAdminModeratorAuthorOrReadOnly,
+                          IsAdminOrReadOnly)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer, TitleSerializer,
+                          TitleSerializerCrUpDel, UserConfirmation,
+                          UserEditSerializer, UserEmailRegistration,
+                          UserSerializer)
 
 
 @api_view(['POST'])
@@ -129,8 +129,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         review = get_object_or_404(Review, pk=self.kwargs['review_id'],
                                    title__id=self.kwargs['title_id'])
-        queryset = Comment.objects.filter(review_id=review)
-        return queryset
+        return Comment.objects.filter(review_id=review)
 
     def perform_create(self, serializer):
         review_id = get_object_or_404(Review, id=self.kwargs.get('review_id'))
@@ -145,8 +144,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Возвращает запрос для отзыва."""
         title = get_object_or_404(Title, id=self.kwargs['title_id'])
-        queryset = Review.objects.filter(title=title)
-        return queryset
+        return Review.objects.filter(title=title)
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))

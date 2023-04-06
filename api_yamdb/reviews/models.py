@@ -1,10 +1,9 @@
 from datetime import datetime
-from django.core.validators import (MaxValueValidator,
-                                    RegexValidator,
-                                    MinValueValidator)
+
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    RegexValidator)
 from django.db import models
 from django.db.models import Avg
-
 from users.models import User
 
 SLUG_VALIDATOR = RegexValidator(r'^[-a-zA-Z0-9_]+$')

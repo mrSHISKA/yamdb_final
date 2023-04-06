@@ -1,6 +1,6 @@
-from rest_framework import serializers
 from django.core.validators import RegexValidator
 from django.utils import timezone
+from rest_framework import serializers
 
 
 def validate_username_regexp():
