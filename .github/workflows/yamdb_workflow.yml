@@ -55,6 +55,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yamdb:latest
             sudo docker-compose stop
             sudo docker-compose rm web
             touch .env
